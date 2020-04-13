@@ -9,7 +9,7 @@ public class ThreadPool
 	  private final int poolSize;
 	
 	  //Internally pool is an array
-	  private final InternalTask[] workers;
+	  private final InternalTask[] internalTasks;
 	
 	  // FIFO ordering
 	  private boolean isShutdown = false;
@@ -21,10 +21,10 @@ public class ThreadPool
 		  this.poolSize = poolSize;
 		  queue = new LinkedBlockingQueue<Task>();
 		  allTasks = new ArrayList<Task>();
-		  workers = new InternalTask[this.poolSize];
+		  internalTasks = new InternalTask[this.poolSize];
 		  for (int i = 0; i < poolSize; i++) {
-			  workers[i] = new InternalTask("Thread " + i);
-			  workers[i].start();
+			  internalTasks[i] = new InternalTask("Thread " + i);
+			  internalTasks[i].start();
 		  }
 	  }
 	
