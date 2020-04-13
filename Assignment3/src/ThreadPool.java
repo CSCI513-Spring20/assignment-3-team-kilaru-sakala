@@ -1,5 +1,3 @@
-
-
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -31,9 +29,11 @@ public class ThreadPool
 	  public void execute(Task task) {
 		  synchronized (queue) {
 			  queue.add(task);
+			  allTasks.add(task);
 			  queue.notify();
 		  }
 	  }
+	  
 	
 	  public void waitForAllTasks() {
 		  boolean hasPendingTask = true;
