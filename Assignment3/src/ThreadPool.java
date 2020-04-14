@@ -3,16 +3,12 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class ThreadPool
 {
-	  //Thread pool size
 	  private final int poolSize;
-	
-	  //Internally pool is an array
 	  private final InternalTask[] internalTasks;
-	
-	  // FIFO ordering
-	  private boolean isShutdown = false;
 	  private final LinkedBlockingQueue<Task> queue;
 	  private final ArrayList<Task> allTasks;
+	  
+	  private boolean isShutdown = false;
 	
 	  //Constructor of the class
 	  public ThreadPool(int poolSize){
@@ -20,13 +16,13 @@ public class ThreadPool
 		  queue = new LinkedBlockingQueue<Task>();
 		  allTasks = new ArrayList<Task>();
 		  internalTasks = new InternalTask[this.poolSize];
-		  for (int i = 0; i < poolSize; i++) {
+		  for (int i = 0; i < this.poolSize; i++) {
 			  internalTasks[i] = new InternalTask("Thread " + i);
 			  internalTasks[i].start();
 		  }
 	  }
 	
-	  public void execute(Task task) {
+	  public void addTasks(Task task) {
 		  synchronized (queue) {
 			  queue.add(task);
 			  allTasks.add(task);
@@ -35,6 +31,7 @@ public class ThreadPool
 	  }
 	  
 	
+	  // Method to check if all the tasks are completed
 	  public void waitForAllTasks() {
 		  boolean hasPendingTask = true;
 		  while (hasPendingTask) {

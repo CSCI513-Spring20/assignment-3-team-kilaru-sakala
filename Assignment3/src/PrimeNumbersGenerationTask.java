@@ -60,9 +60,10 @@ public class PrimeNumbersGenerationTask extends Task {
 	    ArrayList<PrimeNumbersGenerationTask> tasks = new ArrayList<PrimeNumbersGenerationTask>();
 	    int lowerLimit = 0;
 	    int upperLimit = lowerLimit + taskSizePerThread;
+	    // logic to create tasks and assign those tasks to threads 
 	    while (upperLimit <= upperBound) {
 	      PrimeNumbersGenerationTask task = new PrimeNumbersGenerationTask(lowerLimit, upperLimit - 1);
-	      threadPool.execute(task);
+	      threadPool.addTasks(task);
 	      tasks.add(task);
 	      lowerLimit = upperLimit;
 	      upperLimit = lowerLimit + taskSizePerThread;
